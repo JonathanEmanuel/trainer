@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#56CC9D">
+    <meta name="MobileOptimized" content="width">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bat-style" content="black-translucent">
+
+    <title>Trainer</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="apple-touch-startup-image" href="images/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- https://www.flaticon.com/packs/leisure-activities-at-home-10 -->
+<!--     https://www.flaticon.com/free-icon/fitness_2964514?term=fitnes&page=1&position=1&related_id=2964514&origin=search -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Trainer</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Rutinas <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Plan</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+    <div id="appGym" class="container">
+        
+        <div class="row mt-2">
+            <div class="col-10 col-sm-10">
+                <div class="form-group" :class="[tarea.Estado ]">
+                    <input v-model="tarea.Nombre" v-on:keyup.enter="tareaAgregar" :class="[tarea.Validacion]" type="text"  class="form-control" placeholder="Ejercicio">
+                    <div v-text="tarea.Msg" :class="[tarea.MsgValido]"></div>
+                </div>                  
+            </div>
+            <div class="col-2 col-sm-2">
+                <button v-on:click="tareaAgregar" class="btn btn-success" type="button">+</button>
+            </div>
+        </div>
+        <transition-group  name="list">
+            <div v-for="(tarea, index) in tareas" v-bind:key="tarea.Nombre" class="col-md-8">
+                <div  :class="[ tarea.Realizada ? 'alert-success' : 'alert-info' ]" class="alert alert-dismissible">
+                    <button @click="tareaEliminar(index)" type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong v-text="tarea.Nombre" v-on:click="tareaCompletar(index)" class="tarea"></strong>
+                </div>
+            </div>
+        </transition-group>
+    </div>
+    <script src="js/vue.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
